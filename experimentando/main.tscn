@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://nave.tscn" type="PackedScene" id=1]
+[ext_resource path="res://main.gd" type="Script" id=2]
+[ext_resource path="res://nave.gd" type="Script" id=3]
+[ext_resource path="res://bala.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Burbuja.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 488, 0, 0, 0, 0, 0, 488, 128, 0, 0, 0, 0, 0, 128, 0, 0, 0, 0, 0, 0 )
+}
+
+[node name="main" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -2.75302
+margin_top = -0.130859
+margin_right = 488.247
+margin_bottom = 604.869
+color = Color( 0.152941, 0.964706, 0.0392157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nave" parent="." instance=ExtResource( 1 )]
+position = Vector2( 235.862, 421.956 )
+script = ExtResource( 3 )
+
+[node name="cd" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="BurbujaTimer" type="Timer" parent="."]
+
+[node name="bala" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[node name="Burbuja" parent="." instance=ExtResource( 5 )]
+visible = false
+position = Vector2( 235.862, 421.956 )
+
+[node name="SpawnPath" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="SpawnLocation" type="PathFollow2D" parent="SpawnPath"]
+[connection signal="timeout" from="cd" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="BurbujaTimer" to="." method="_on_BurbujaTimer_timeout"]
